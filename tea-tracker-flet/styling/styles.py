@@ -14,3 +14,4 @@ class Color(StrEnum):
 class Font(StrEnum):
     INKNUT_ANTIQUA = "fonts/InknutAntiqua-Regular.ttf"
     INKNUT_ANTIQUA_BOLD = "fonts/InknutAntiqua-Bold.ttf"
+    INKNUT_ANTIQUA_LIGHT = "fonts/InknutAntiqua-Light.ttf"

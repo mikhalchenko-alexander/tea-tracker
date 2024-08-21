@@ -1,6 +1,7 @@
 import flet as ft
 
 from styling.styles import Font, Color
+from components.status_bar import StatusBar
 
 
 def main(page: ft.Page):
@@ -29,13 +30,7 @@ def main(page: ft.Page):
                         )
                     ],
                 ),
-                content=ft.Container(
-                    border=ft.Border(
-                        top=ft.BorderSide(width=1, color=Color.ORANGE_LIGHT_TRANSPARENT),
-                        bottom=ft.BorderSide(width=1, color=Color.ORANGE_LIGHT_TRANSPARENT),
-                    ),
-                    height=50
-                )
+                content=StatusBar()
             )))
     page.window.width = 390
     page.window.height = 844
