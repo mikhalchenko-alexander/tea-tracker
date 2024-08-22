@@ -1,5 +1,6 @@
 import flet as ft
 
+from components.brews import Brews
 from styling.styles import Font, Color
 from components.status_bar import StatusBar
 
@@ -30,7 +31,17 @@ def main(page: ft.Page):
                         )
                     ],
                 ),
-                content=StatusBar()
+                content=ft.Column(
+                    controls=[
+                        StatusBar(),
+                        ft.Container(height=30),
+                        ft.Row(
+                            controls=[
+                                Brews(current_brew=3, total_ml=423)
+                            ]
+                        )
+                    ]
+                )
             )))
     page.window.width = 390
     page.window.height = 844

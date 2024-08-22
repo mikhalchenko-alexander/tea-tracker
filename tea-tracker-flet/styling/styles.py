@@ -7,7 +7,8 @@ class Color(StrEnum):
     ORANGE_LIGHT = "#FAD074",
     ORANGE_LIGHT_TRANSPARENT = "#99FAD074",
     ORANGE = "#FFC634",
-    LIGHT = "#FFC634",
+    LIGHT = "#FFF0E1",
+    LIGHT_TRANSPARENT = "#4CFFF0E1",
     BLACK = "#272726"
 
 
