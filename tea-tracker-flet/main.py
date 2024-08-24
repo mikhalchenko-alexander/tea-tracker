@@ -1,17 +1,17 @@
 import flet as ft
-from flet_core import CrossAxisAlignment, MainAxisAlignment
+from flet_core import ImageFit
 
 from components.brews import Brews
+from components.status_bar import StatusBar
 from components.timer import Timer
 from styling.styles import Font, Color
-from components.status_bar import StatusBar
 
 
 def main(page: ft.Page):
     page.fonts = {font: font for font in Font}
     page.add(
         ft.SafeArea(
-            ft.Pagelet(
+            content=ft.Pagelet(
                 appbar=ft.AppBar(
                     bgcolor=Color.BLACK,
                     center_title=True,
@@ -37,26 +37,40 @@ def main(page: ft.Page):
                     controls=[
                         StatusBar(),
                         ft.Container(height=30),
-                        ft.ResponsiveRow(
+                        ft.Stack(
                             controls=[
-                                ft.Column(
-                                    col=3,
-                                    controls=[Brews(current_brew=3, total_ml=423)]
+                                ft.Image(
+                                    top=170,
+                                    left=-45,
+                                    width=560,
+                                    fit=ImageFit.FIT_WIDTH,
+                                    src="images/cup.png"
                                 ),
-                                ft.Column(
-                                    col=9,
+                                ft.ResponsiveRow(
+                                    height=800,
+                                    columns=12,
                                     controls=[
-                                        ft.Container(height=40),
-                                        Timer(6, 10, 105)
+                                        ft.Column(
+                                            col=3,
+                                            controls=[Brews(current_brew=3, total_ml=423)]
+                                        ),
+                                        ft.Column(
+                                            col=9,
+                                            controls=[
+                                                ft.Container(height=40),
+                                                Timer(6, 10, 105),
+                                            ]
+                                        )
                                     ]
                                 )
                             ]
-                        )
+                        ),
                     ]
                 )
             )))
     page.window.width = 390
     page.window.height = 844
+    page.padding=ft.padding.all(0)
     page.bgcolor = Color.BLACK
     page.update()
 
