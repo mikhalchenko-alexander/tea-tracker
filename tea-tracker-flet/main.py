@@ -1,6 +1,8 @@
 import flet as ft
+from flet_core import CrossAxisAlignment, MainAxisAlignment
 
 from components.brews import Brews
+from components.timer import Timer
 from styling.styles import Font, Color
 from components.status_bar import StatusBar
 
@@ -35,9 +37,19 @@ def main(page: ft.Page):
                     controls=[
                         StatusBar(),
                         ft.Container(height=30),
-                        ft.Row(
+                        ft.ResponsiveRow(
                             controls=[
-                                Brews(current_brew=3, total_ml=423)
+                                ft.Column(
+                                    col=3,
+                                    controls=[Brews(current_brew=3, total_ml=423)]
+                                ),
+                                ft.Column(
+                                    col=9,
+                                    controls=[
+                                        ft.Container(height=40),
+                                        Timer(6, 10, 105)
+                                    ]
+                                )
                             ]
                         )
                     ]

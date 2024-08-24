@@ -1,5 +1,5 @@
 import flet as ft
-from flet_core import CrossAxisAlignment
+from flet_core import CrossAxisAlignment, MainAxisAlignment
 
 from styling.styles import Color, Font
 
@@ -14,6 +14,7 @@ class Brews(ft.Column):
         self.controls = [
                             ft.Row(
                                 spacing=3,
+                                alignment=MainAxisAlignment.CENTER,
                                 controls=[
                                     ft.Text(
                                         str(current_brew),
