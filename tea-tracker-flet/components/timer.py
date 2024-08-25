@@ -1,5 +1,5 @@
 import flet as ft
-from flet_core import Alignment, StrokeCap, TextAlign, padding, Border, \
+from flet_core import StrokeCap, TextAlign, padding, Border, \
     BorderSide, Container
 
 from styling.styles import Color, Font
