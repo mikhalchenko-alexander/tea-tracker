@@ -11,6 +11,7 @@ class Brews(ft.Column):
         super(Brews, self).__init__(**kwargs)
         self.current_brew = current_brew
         self.horizontal_alignment = CrossAxisAlignment.CENTER
+        self.spacing = 7
         self.controls = [
                             ft.Row(
                                 spacing=3,
@@ -33,7 +34,7 @@ class Brews(ft.Column):
                         ] + [ft.Image(
             src="icons/water.svg",
             color=self.get_water_color(brew),
-            width=28
+            width=31
         ) for brew in range(1, max_brew + 1)] + [
                             ft.Text(
                                 f"{total_ml} ml",

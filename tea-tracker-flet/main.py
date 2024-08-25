@@ -40,9 +40,9 @@ def main(page: ft.Page):
                         ft.Stack(
                             controls=[
                                 ft.Image(
-                                    top=170,
-                                    left=-45,
-                                    width=560,
+                                    top=215,
+                                    left=-30,
+                                    width=450,
                                     fit=ImageFit.FIT_WIDTH,
                                     src="images/cup.png"
                                 ),
@@ -57,8 +57,12 @@ def main(page: ft.Page):
                                         ft.Column(
                                             col=9,
                                             controls=[
-                                                ft.Container(height=40),
-                                                Timer(6, 10, 105),
+                                                ft.Container(height=35),
+                                                ft.Container(
+                                                    content=Timer(6, 10, 105),
+                                                    padding=ft.padding.only(left=7)
+                                                )
+
                                             ]
                                         )
                                     ]
