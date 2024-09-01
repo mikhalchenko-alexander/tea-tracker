@@ -1,6 +1,7 @@
 import flet as ft
 from flet_core import ImageFit
 
+from components.app_bar_button import AppBarButton
 from components.brews import Brews
 from components.status_bar import StatusBar
 from components.timer import Timer
@@ -12,27 +13,6 @@ def main(page: ft.Page):
     page.add(
         ft.SafeArea(
             content=ft.Pagelet(
-                appbar=ft.AppBar(
-                    bgcolor=Color.BLACK,
-                    center_title=True,
-                    leading=ft.IconButton(
-                        icon=ft.icons.ARROW_BACK_IOS,
-                        icon_color=Color.ORANGE_LIGHT
-                    ),
-                    title=ft.Text(
-                        value="New set",
-                        color=Color.ORANGE_LIGHT,
-                        font_family=Font.INKNUT_ANTIQUA,
-                        size=20
-                    ),
-                    actions=[
-                        ft.PopupMenuButton(
-                            items=[],
-                            icon_color=Color.ORANGE_LIGHT,
-                            icon=ft.icons.MORE_VERT
-                        )
-                    ],
-                ),
                 content=ft.Column(
                     controls=[
                         StatusBar(),
@@ -72,9 +52,48 @@ def main(page: ft.Page):
                     ]
                 )
             )))
+
+    page.appbar = ft.AppBar(
+        bgcolor=Color.BLACK,
+        center_title=True,
+        leading=ft.IconButton(
+            icon=ft.icons.ARROW_BACK_IOS,
+            icon_color=Color.ORANGE_LIGHT
+        ),
+        title=ft.Text(
+            value="New set",
+            color=Color.ORANGE_LIGHT,
+            font_family=Font.INKNUT_ANTIQUA,
+            size=20
+        ),
+        actions=[
+            ft.PopupMenuButton(
+                items=[],
+                icon_color=Color.ORANGE_LIGHT,
+                icon=ft.icons.MORE_VERT
+            )
+        ],
+    )
+
+    page.bottom_appbar = ft.BottomAppBar(
+        bgcolor=Color.TRANSPARENT,
+        content=ft.Row(
+            controls=[
+                ft.Row(
+                    expand=True,
+                    controls=[
+                        AppBarButton("icons/stop.svg"),
+                        AppBarButton("icons/tea.svg")
+                    ]
+                ),
+                AppBarButton("icons/update.svg", "+5 sec")
+            ]
+        )
+    )
+
     page.window.width = 390
     page.window.height = 844
-    page.padding=ft.padding.all(0)
+    page.padding = ft.padding.all(0)
     page.bgcolor = Color.BLACK
     page.update()
 
