@@ -1,7 +1,7 @@
 import flet as ft
 from flet_core import CrossAxisAlignment, MainAxisAlignment
 
-from styling.styles import Color, Font
+from ..styling.styles import Color, Font
 
 max_brew = 12
 

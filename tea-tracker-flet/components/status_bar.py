@@ -4,8 +4,8 @@ import flet as ft
 from flet_core import Ref, OptionalNumber, MainAxisAlignment
 from flet_core.types import ResponsiveNumber
 
-from components.status_icon import StatusIcon
-from styling.styles import Color
+from ..components.status_icon import StatusIcon
+from ..styling.styles import Color
 
 
 class StatusBar(ft.Container):

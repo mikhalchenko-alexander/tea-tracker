@@ -1,7 +1,7 @@
 import flet as ft
 
-from components.app_bar_button import AppBarButton
-from styling.styles import Color
+from ..components.app_bar_button import AppBarButton
+from ..styling.styles import Color
 
 
 class BottomAppbar(ft.BottomAppBar):

@@ -1,9 +1,9 @@
 import flet as ft
 from flet_core import ImageFit
 
-from components.brews import Brews
-from components.status_bar import StatusBar
-from components.timer import Timer
+from ..components.brews import Brews
+from ..components.status_bar import StatusBar
+from ..components.timer import Timer
 
 
 class MainScreen(ft.Column):

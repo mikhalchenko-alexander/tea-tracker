@@ -2,7 +2,7 @@ import flet as ft
 from flet_core import StrokeCap, TextAlign, padding, Border, \
     BorderSide, Container
 
-from styling.styles import Color, Font
+from ..styling.styles import Color, Font
 
 SIZE = 170
 
@@ -29,7 +29,7 @@ class TextContainer(Container):
 
 
 class Timer(ft.Container):
-    def __init__(self, currentTime: float, currentBrewTime: float, totalBrewTime: float):
+    def __init__(self, current_time: float, current_brew_time: float, total_brew_time: float):
         super().__init__()
         self.content = ft.Stack(
             controls=[
@@ -44,7 +44,7 @@ class Timer(ft.Container):
                     bgcolor=Color.TRANSPARENT,
                     color=Color.ORANGE,
                     stroke_cap=StrokeCap.ROUND,
-                    value=1 - currentTime / currentBrewTime,
+                    value=1 - current_time / current_brew_time,
                     stroke_width=14,
                     width=SIZE,
                     height=SIZE,

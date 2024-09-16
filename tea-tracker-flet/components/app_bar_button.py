@@ -1,7 +1,7 @@
 import flet as ft
 from flet_core import MainAxisAlignment
 
-from styling.styles import Color
+from ..styling.styles import Color
 
 
 class AppBarButton(ft.Container):
