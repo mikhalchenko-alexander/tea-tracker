@@ -1,7 +1,9 @@
 import flet as ft
 from flet_core import StrokeCap, TextAlign, padding, Border, \
     BorderSide, Container
+from mopyx import render
 
+from state.timer.timer_state import timer_model
 from styling.styles import Color, Font
 
 SIZE = 170
@@ -29,8 +31,17 @@ class TextContainer(Container):
 
 
 class Timer(ft.Container):
-    def __init__(self, currentTime: float, currentBrewTime: float, totalBrewTime: float):
+
+    def __init__(self, current_time: float, current_brew_time: float, current_brew_time_total_brew_time: float):
         super().__init__()
+        # self.current_time = current_time
+        self.model = timer_model
+        self.current_brew_time = current_brew_time
+        self.current_brew_time_total_brew_timee = current_brew_time_total_brew_time
+        self.timer_render()
+
+    @render
+    def timer_render(self):
         self.content = ft.Stack(
             controls=[
                 ft.ProgressRing(
@@ -44,7 +55,7 @@ class Timer(ft.Container):
                     bgcolor=Color.TRANSPARENT,
                     color=Color.ORANGE,
                     stroke_cap=StrokeCap.ROUND,
-                    value=1 - currentTime / currentBrewTime,
+                    value=1 - self.model.current_time / self.current_brew_time,
                     stroke_width=14,
                     width=SIZE,
                     height=SIZE,
@@ -52,7 +63,7 @@ class Timer(ft.Container):
                 ),
                 TextContainer(
                     top=30,
-                    text="00:06",
+                    text=self.format_seconds(self.model.current_time),
                     color=Color.ORANGE,
                     font_family=Font.INKNUT_ANTIQUA_BOLD,
                     size=24
@@ -75,3 +86,17 @@ class Timer(ft.Container):
 
             ]
         )
+
+    def format_seconds(self, seconds):
+        sign = "-" if seconds < 0 else ""
+
+        abs_seconds = abs(seconds)
+
+        hours = abs_seconds // 3600
+        minutes = (abs_seconds % 3600) // 60
+        secs = abs_seconds % 60
+
+        if hours > 0:
+            return f"{sign}{hours:02}:{minutes:02}:{secs:02}"
+        else:
+            return f"{sign}{minutes:02}:{secs:02}"
