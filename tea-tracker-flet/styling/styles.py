@@ -9,8 +9,9 @@ class Color(StrEnum):
     ORANGE = "#FFC634",
     LIGHT = "#FFF0E1",
     LIGHT_TRANSPARENT = "#4CFFF0E1",
-    BLACK = "#272726"
-    TRANSPARENT = "#00000000"
+    BLACK = "#272726",
+    TRANSPARENT = "#00000000",
+    RED = "#AA0000",
 
 
 class Font(StrEnum):

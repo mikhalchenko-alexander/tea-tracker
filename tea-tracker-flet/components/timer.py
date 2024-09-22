@@ -32,10 +32,8 @@ class TextContainer(Container):
 
 class Timer(ft.Container):
 
-    def __init__(self, current_time: float, current_brew_time: float, current_brew_time_total_brew_time: float):
+    def __init__(self, current_brew_time: float, current_brew_time_total_brew_time: float):
         super().__init__()
-        # self.current_time = current_time
-        self.model = timer_model
         self.current_brew_time = current_brew_time
         self.current_brew_time_total_brew_timee = current_brew_time_total_brew_time
         self.timer_render()
@@ -45,7 +43,7 @@ class Timer(ft.Container):
         self.content = ft.Stack(
             controls=[
                 ft.ProgressRing(
-                    bgcolor=Color.LIGHT_TRANSPARENT,
+                    bgcolor=Color.LIGHT_TRANSPARENT if timer_model.current_time >= 0 else Color.RED,
                     value=0,
                     stroke_width=20,
                     width=SIZE,
@@ -55,7 +53,7 @@ class Timer(ft.Container):
                     bgcolor=Color.TRANSPARENT,
                     color=Color.ORANGE,
                     stroke_cap=StrokeCap.ROUND,
-                    value=1 - self.model.current_time / self.current_brew_time,
+                    value=timer_model.current_time / self.current_brew_time,
                     stroke_width=14,
                     width=SIZE,
                     height=SIZE,
@@ -63,21 +61,21 @@ class Timer(ft.Container):
                 ),
                 TextContainer(
                     top=30,
-                    text=self.format_seconds(self.model.current_time),
+                    text=self.format_seconds(timer_model.current_time),
                     color=Color.ORANGE,
                     font_family=Font.INKNUT_ANTIQUA_BOLD,
-                    size=24
+                    size=21
                 ),
                 TextContainer(
                     top=80,
-                    text="00:10",
+                    text=self.format_seconds(timer_model.brew_time),
                     color=Color.LIGHT,
                     font_family=Font.INKNUT_ANTIQUA,
                     size=14
                 ),
                 TextContainer(
                     top=115,
-                    text="01:45",
+                    text=self.format_seconds(timer_model.total_brew_time),
                     color=Color.LIGHT,
                     font_family=Font.INKNUT_ANTIQUA,
                     size=14,
