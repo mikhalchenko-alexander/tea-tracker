@@ -53,7 +53,7 @@ class Timer(ft.Container):
                     bgcolor=Color.TRANSPARENT,
                     color=Color.ORANGE,
                     stroke_cap=StrokeCap.ROUND,
-                    value=timer_model.current_time / self.current_brew_time,
+                    value=timer_model.current_time / timer_model.brew_time,
                     stroke_width=14,
                     width=SIZE,
                     height=SIZE,
