@@ -10,6 +10,7 @@ class AppBarButton(ft.Container):
         super().__init__(**kwargs)
         self.expand = 1
         self.height = 100
+        disabled = kwargs.get('disabled', False)
 
         if icon is not None and label is not None:
             content = ft.Row(
@@ -27,11 +28,12 @@ class AppBarButton(ft.Container):
         else:
             content = ft.Text(
                 label,
-                style=ft.TextStyle(color=Color.LIGHT, size=26)
+                style=ft.TextStyle(color=Color.RED if disabled else Color.LIGHT, size=26)
             )
 
         self.content = ft.FilledButton(
             content=content,
+            disabled=disabled,
             style=ft.ButtonStyle(
                 side=ft.BorderSide(width=2, color=Color.GREEN_MAIN),
                 shape=ft.RoundedRectangleBorder(radius=16),

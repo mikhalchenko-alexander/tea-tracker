@@ -30,6 +30,21 @@ class TextContainer(Container):
             )
 
 
+def format_seconds(seconds):
+    sign = "-" if seconds < 0 else ""
+
+    abs_seconds = abs(seconds)
+
+    hours = abs_seconds // 3600
+    minutes = (abs_seconds % 3600) // 60
+    secs = abs_seconds % 60
+
+    if hours > 0:
+        return f"{sign}{hours:02}:{minutes:02}:{secs:02}"
+    else:
+        return f"{sign}{minutes:02}:{secs:02}"
+
+
 class Timer(ft.Container):
 
     def __init__(self, current_brew_time: float, current_brew_time_total_brew_time: float):
@@ -61,21 +76,21 @@ class Timer(ft.Container):
                 ),
                 TextContainer(
                     top=30,
-                    text=self.format_seconds(timer_model.current_time),
+                    text=format_seconds(timer_model.current_time),
                     color=Color.ORANGE,
                     font_family=Font.INKNUT_ANTIQUA_BOLD,
                     size=21
                 ),
                 TextContainer(
                     top=80,
-                    text=self.format_seconds(timer_model.brew_time),
+                    text=format_seconds(timer_model.brew_time),
                     color=Color.LIGHT,
                     font_family=Font.INKNUT_ANTIQUA,
                     size=14
                 ),
                 TextContainer(
                     top=115,
-                    text=self.format_seconds(timer_model.total_brew_time),
+                    text=format_seconds(timer_model.total_brew_time),
                     color=Color.LIGHT,
                     font_family=Font.INKNUT_ANTIQUA,
                     size=14,
@@ -84,17 +99,3 @@ class Timer(ft.Container):
 
             ]
         )
-
-    def format_seconds(self, seconds):
-        sign = "-" if seconds < 0 else ""
-
-        abs_seconds = abs(seconds)
-
-        hours = abs_seconds // 3600
-        minutes = (abs_seconds % 3600) // 60
-        secs = abs_seconds % 60
-
-        if hours > 0:
-            return f"{sign}{hours:02}:{minutes:02}:{secs:02}"
-        else:
-            return f"{sign}{minutes:02}:{secs:02}"

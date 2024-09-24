@@ -42,12 +42,11 @@ class BottomAppbar(ft.BottomAppBar):
                         spacing=0,
                         controls=[
                             AppBarButton(
-                                expand=1,
+                                disabled=timer_model.brew_time <= 5,
                                 icon=None,
                                 label="-",
                                 on_click=self.decrease_brew_time),
                             ft.Container(
-                                expand=0,
                                 border=ft.border.symmetric(None, ft.BorderSide(2, Color.LIGHT_TRANSPARENT)),
                                 padding=ft.padding.symmetric(0, 10),
                                 content=ft.Column(
@@ -65,7 +64,6 @@ class BottomAppbar(ft.BottomAppBar):
                                 ),
                             ),
                             AppBarButton(
-                                expand=1,
                                 icon=None,
                                 label="+",
                                 on_click=self.increase_brew_time)
@@ -97,5 +95,6 @@ class BottomAppbar(ft.BottomAppBar):
         self.page.update()
 
     def decrease_brew_time(self, evt: ft.ControlEvent):
-        timer_model.brew_time -= 5
-        self.page.update()
+        if timer_model.brew_time > 5:
+            timer_model.brew_time -= 5
+            self.page.update()
