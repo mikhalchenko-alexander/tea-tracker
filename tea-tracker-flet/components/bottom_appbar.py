@@ -1,13 +1,13 @@
 import asyncio
 
 import flet as ft
-from flet_core import MainAxisAlignment, CrossAxisAlignment
+from flet_core import MainAxisAlignment, CrossAxisAlignment, ButtonStyle
 from mopyx import render
 
 from components.app_bar_button import AppBarButton
 from state.brew_state import brew_model
 from state.timer_state import timer_model
-from styling.styles import Color
+from styling.styles import Color, Font
 
 
 class BottomAppbar(ft.BottomAppBar):
@@ -30,7 +30,8 @@ class BottomAppbar(ft.BottomAppBar):
                         ),
                         AppBarButton(
                             icon=ft.Image("icons/tea.svg", color=Color.LIGHT, color_blend_mode=ft.BlendMode.DST),
-                            label=None
+                            label=None,
+                            on_click=self.new_set
                         )
                     ]
                 ),
@@ -100,3 +101,60 @@ class BottomAppbar(ft.BottomAppBar):
         if timer_model.brew_time > 5:
             timer_model.brew_time -= 5
             self.page.update()
+
+    def create_new_set_modal(self):
+        new_set_modal = ft.AlertDialog(
+            modal=False,
+            bgcolor=Color.BLACK,
+            content=ft.Text(
+                "Do you want to start a new set?",
+                color=Color.LIGHT,
+                font_family=Font.INKNUT_ANTIQUA_LIGHT,
+                size=14,
+            ),
+            actions=[
+                ft.TextButton(
+                    content=ft.Text(
+                        "Yes",
+                        color=Color.LIGHT,
+                        font_family=Font.INKNUT_ANTIQUA_LIGHT,
+                        size=14,
+                    ),
+                    on_click=lambda e: self.start_new_set(new_set_modal),
+                    style=ButtonStyle(
+                        side=ft.BorderSide(2, Color.GREEN_MAIN),
+                        shape=ft.RoundedRectangleBorder(5),
+                        color=Color.LIGHT
+                    )
+                ),
+                ft.TextButton(
+                    content=ft.Text(
+                        "No",
+                        color=Color.LIGHT,
+                        font_family=Font.INKNUT_ANTIQUA_LIGHT,
+                        size=14,
+                    ),
+                    on_click=lambda e: self.page.close(new_set_modal),
+                    style=ButtonStyle(
+                        side=ft.BorderSide(2, Color.GREEN_MAIN),
+                        shape=ft.RoundedRectangleBorder(5),
+                        color=Color.LIGHT,
+                        bgcolor=Color.GREEN_MAIN
+                    )
+                )
+            ]
+        )
+        return new_set_modal
+
+    def new_set(self, evt: ft.ControlEvent):
+        self.page.open(self.create_new_set_modal())
+
+    def start_new_set(self, new_set_modal: ft.AlertDialog):
+        brew_model.current_brew = 0
+        brew_model.total_ml = 0
+        timer_model.brew_time = 10
+        timer_model.is_ticking = False
+        timer_model.current_time = 0
+        timer_model.total_brew_time = 0
+        self.page.close(new_set_modal)
+        self.page.update()
