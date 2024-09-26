@@ -11,7 +11,7 @@ def main(page: ft.Page):
     page.add(
         ft.SafeArea(
             content=ft.Pagelet(
-                content=MainScreen(page)
+                content=MainScreen()
             )
         )
     )

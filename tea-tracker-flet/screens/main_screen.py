@@ -7,7 +7,7 @@ from components.timer import Timer
 
 
 class MainScreen(ft.Column):
-    def __init__(self, page):
+    def __init__(self):
         super().__init__()
         self.controls = [
             StatusBar(),
@@ -34,7 +34,7 @@ class MainScreen(ft.Column):
                                 controls=[
                                     ft.Container(height=35),
                                     ft.Container(
-                                        content=Timer(10, 105),
+                                        content=Timer(),
                                         padding=ft.padding.only(left=7)
                                     )
 

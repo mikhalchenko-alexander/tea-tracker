@@ -5,7 +5,8 @@ from flet_core import MainAxisAlignment, CrossAxisAlignment
 from mopyx import render
 
 from components.app_bar_button import AppBarButton
-from state.timer.timer_state import timer_model
+from state.brew_state import brew_model
+from state.timer_state import timer_model
 from styling.styles import Color
 
 
@@ -76,6 +77,7 @@ class BottomAppbar(ft.BottomAppBar):
     def start_timer(self, evt: ft.ControlEvent):
         timer_model.current_time = timer_model.brew_time
         timer_model.is_ticking = True
+        brew_model.current_brew += 1
         self.page.update()
         self.page.run_task(self.update_current_time)
 

@@ -3,7 +3,7 @@ from flet_core import StrokeCap, TextAlign, padding, Border, \
     BorderSide, Container
 from mopyx import render
 
-from state.timer.timer_state import timer_model
+from state.timer_state import timer_model
 from styling.styles import Color, Font
 
 SIZE = 170
@@ -47,10 +47,8 @@ def format_seconds(seconds):
 
 class Timer(ft.Container):
 
-    def __init__(self, current_brew_time: float, current_brew_time_total_brew_time: float):
+    def __init__(self):
         super().__init__()
-        self.current_brew_time = current_brew_time
-        self.current_brew_time_total_brew_timee = current_brew_time_total_brew_time
         self.timer_render()
 
     @render
