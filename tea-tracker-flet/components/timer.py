@@ -3,6 +3,7 @@ from flet_core import StrokeCap, TextAlign, padding, Border, \
     BorderSide, Container
 from mopyx import render
 
+from scales.main import format_seconds
 from state.timer_state import timer_model
 from styling.styles import Color, Font
 
@@ -30,19 +31,19 @@ class TextContainer(Container):
             )
 
 
-def format_seconds(seconds):
-    sign = "-" if seconds < 0 else ""
-
-    abs_seconds = abs(seconds)
-
-    hours = abs_seconds // 3600
-    minutes = (abs_seconds % 3600) // 60
-    secs = abs_seconds % 60
-
-    if hours > 0:
-        return f"{sign}{hours:02}:{minutes:02}:{secs:02}"
-    else:
-        return f"{sign}{minutes:02}:{secs:02}"
+# def format_seconds(seconds):
+#     sign = "-" if seconds < 0 else ""
+#
+#     abs_seconds = abs(seconds)
+#
+#     hours = abs_seconds // 3600
+#     minutes = (abs_seconds % 3600) // 60
+#     secs = abs_seconds % 60
+#
+#     if hours > 0:
+#         return f"{sign}{hours:02}:{minutes:02}:{secs:02}"
+#     else:
+#         return f"{sign}{minutes:02}:{secs:02}"
 
 
 class Timer(ft.Container):
