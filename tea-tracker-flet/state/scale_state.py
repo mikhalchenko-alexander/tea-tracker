@@ -61,8 +61,12 @@ class ScalesModel:
         igrams = int(grams)
         result = False
 
-        if self.cup_present and self.cup_weight == 0:
-            self.cup_weight = empty_teapot_weight
+        if self.cup_present:
+            if self.cup_weight == 0:
+                self.cup_weight = empty_teapot_weight
+                result = True
+        elif self.cup_weight > 0:
+            self.cup_weight = 0
             result = True
 
         if self.cup_weight > 0 and self.tea_weight < leaves_min_weight:
