@@ -1,6 +1,6 @@
 import flet as ft
 
-from ..styling.styles import Color, Font
+from styling.styles import Color, Font
 
 
 class AppBar(ft.AppBar):

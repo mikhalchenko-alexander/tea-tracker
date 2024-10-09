@@ -1,9 +1,9 @@
 import flet as ft
 from flet_core import ImageFit
 
-from ..components.brews import Brews
-from ..components.status_bar import StatusBar
-from ..components.timer import Timer
+from components.brews import Brews
+from components.status_bar import StatusBar
+from components.timer import Timer
 
 
 class MainScreen(ft.Column):
@@ -34,7 +34,7 @@ class MainScreen(ft.Column):
                                 controls=[
                                     ft.Container(height=35),
                                     ft.Container(
-                                        content=Timer(6, 10, 105),
+                                        content=Timer(),
                                         padding=ft.padding.only(left=7)
                                     )
 

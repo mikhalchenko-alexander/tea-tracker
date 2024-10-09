@@ -1,1 +1,3 @@
 flet==0.24.1
+mopyx==1.1.1
+reactivex==4.0.4

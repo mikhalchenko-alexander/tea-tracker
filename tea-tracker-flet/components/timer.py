@@ -1,8 +1,11 @@
 import flet as ft
 from flet_core import StrokeCap, TextAlign, padding, Border, \
     BorderSide, Container
+from mopyx import render
 
-from ..styling.styles import Color, Font
+from scales.main import format_seconds
+from state.timer_state import timer_model
+from styling.styles import Color, Font
 
 SIZE = 170
 
@@ -27,14 +30,18 @@ class TextContainer(Container):
                 bottom=BorderSide(1, color=Color.LIGHT)
             )
 
-
 class Timer(ft.Container):
-    def __init__(self, current_time: float, current_brew_time: float, total_brew_time: float):
+
+    def __init__(self):
         super().__init__()
+        self.timer_render()
+
+    @render
+    def timer_render(self):
         self.content = ft.Stack(
             controls=[
                 ft.ProgressRing(
-                    bgcolor=Color.LIGHT_TRANSPARENT,
+                    bgcolor=Color.LIGHT_TRANSPARENT if timer_model.current_time >= 0 else Color.RED,
                     value=0,
                     stroke_width=20,
                     width=SIZE,
@@ -44,7 +51,7 @@ class Timer(ft.Container):
                     bgcolor=Color.TRANSPARENT,
                     color=Color.ORANGE,
                     stroke_cap=StrokeCap.ROUND,
-                    value=1 - current_time / current_brew_time,
+                    value=timer_model.current_time / timer_model.brew_time,
                     stroke_width=14,
                     width=SIZE,
                     height=SIZE,
@@ -52,21 +59,21 @@ class Timer(ft.Container):
                 ),
                 TextContainer(
                     top=30,
-                    text="00:06",
+                    text=format_seconds(timer_model.current_time),
                     color=Color.ORANGE,
                     font_family=Font.INKNUT_ANTIQUA_BOLD,
-                    size=24
+                    size=21
                 ),
                 TextContainer(
                     top=80,
-                    text="00:10",
+                    text=format_seconds(timer_model.brew_time),
                     color=Color.LIGHT,
                     font_family=Font.INKNUT_ANTIQUA,
                     size=14
                 ),
                 TextContainer(
                     top=115,
-                    text="01:45",
+                    text=format_seconds(timer_model.total_brew_time),
                     color=Color.LIGHT,
                     font_family=Font.INKNUT_ANTIQUA,
                     size=14,
