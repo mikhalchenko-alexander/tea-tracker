@@ -49,21 +49,12 @@ def create_countdown(countdown_timer, start_from=10):
     )
 
 
-def numbers_stream(observer, scheduler):
+def emit_list(list, observer):
     def emit():
         observer.on_next(0.)
-        values = [
-            (empty, 2),
-            (empty_teapot, 1),
-            (full_teapot, 3),
-            (full_teapot_cap, 3),
-            (empty_teapot, 2),
-            (full_teapot, 18),
-            (empty, 4),
-        ]
         delay = 0.1
 
-        for func, count in values:
+        for func, count in list:
             for _ in range(int(count / delay)):
                 observer.on_next(func())
                 time.sleep(delay)
@@ -71,6 +62,34 @@ def numbers_stream(observer, scheduler):
         observer.on_completed()
 
     threading.Thread(target=emit).start()
+
+
+def none_to_full_stream(observer, scheduler):
+    emit_list([
+        (empty, 2),
+        (empty_teapot, 1),
+        (full_teapot, 3),
+        (full_teapot_cap, 3),
+    ], observer)
+
+
+def to_none_stream(observer, scheduler):
+    emit_list([
+        (empty, 0)
+    ], observer)
+
+
+# def numbers_stream(observer, scheduler):
+
+    # emit_list([
+    #     (empty, 2),
+    #     (empty_teapot, 1),
+    #     (full_teapot, 3),
+    #     (full_teapot_cap, 3),
+    #     (empty_teapot, 2),
+    #     (full_teapot, 18),
+    #     (empty, 4),
+    # ], observer)
 
 
 def update_objects(page: ft.Page, objects: set[str]):
@@ -84,7 +103,7 @@ def update_weight(page: ft.Page, grams: float):
 
 
 def simulate_scales(page: ft.Page):
-    weight = rx.create(numbers_stream).pipe(ops.publish())
+    weight = rx.create(none_to_full_stream).pipe(ops.publish())
 
     state = weight.pipe(
         ops.map(lambda v: identify_teapot_state(v)),
@@ -95,7 +114,8 @@ def simulate_scales(page: ft.Page):
         lambda objects: update_objects(page, objects)
     )
     weight.subscribe(
-        lambda grams: update_weight(page, grams)
+        on_next = lambda grams: update_weight(page, grams),
+        on_completed = lambda: print('end')
     )
 
     weight.connect()
