@@ -2,7 +2,7 @@ import flet as ft
 
 from components.app_bar import AppBar
 from components.bottom_appbar import BottomAppbar
-from scales.main import simulate_scales
+from scales.main import start_brew
 from screens.main_screen import MainScreen
 from styling.styles import Font, Color
 
@@ -24,7 +24,7 @@ def main(page: ft.Page):
     page.window.height = 844
     page.padding = ft.padding.all(0)
     page.bgcolor = Color.BLACK
-    simulate_scales(page=page)
+    start_brew(page=page)
     page.update()
 
 

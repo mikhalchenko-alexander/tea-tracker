@@ -18,6 +18,19 @@ class ScalesModel:
         self.lid_present = False
         self.lid_weight = 0
 
+    def reset(self):
+        self.cup_present = False
+        self.cup_weight = 0
+
+        self.tea_present = False
+        self.tea_weight = 0
+
+        self.water_present = False
+        self.water_weight = 0
+
+        self.lid_present = False
+        self.lid_weight = 0
+
     def set_total_weight(self, total_weight):
         self.cup_weight = total_weight
 

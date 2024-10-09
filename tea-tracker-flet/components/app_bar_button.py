@@ -12,6 +12,9 @@ class AppBarButton(ft.Container):
         self.height = 100
         disabled = kwargs.get('disabled', False)
 
+        if icon is not None:
+            icon.color = Color.LIGHT_TRANSPARENT if disabled else Color.LIGHT
+
         if icon is not None and label is not None:
             content = ft.Row(
                 controls=[
@@ -35,7 +38,7 @@ class AppBarButton(ft.Container):
             content=content,
             disabled=disabled,
             style=ft.ButtonStyle(
-                side=ft.BorderSide(width=2, color=Color.GREEN_MAIN),
+                side=ft.BorderSide(width=2, color=Color.LIGHT_TRANSPARENT if disabled else Color.GREEN_MAIN),
                 shape=ft.RoundedRectangleBorder(radius=16),
                 bgcolor=Color.GREEN_MAIN if label else Color.TRANSPARENT,
                 padding=0

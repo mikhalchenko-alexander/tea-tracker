@@ -5,7 +5,9 @@ from flet_core import MainAxisAlignment, CrossAxisAlignment, ButtonStyle
 from mopyx import render
 
 from components.app_bar_button import AppBarButton
+from scales.main import stop_brew, start_brew
 from state.brew_state import brew_model
+from state.scale_state import scales_model
 from state.timer_state import timer_model
 from styling.styles import Color, Font
 
@@ -18,6 +20,7 @@ class BottomAppbar(ft.BottomAppBar):
 
     @render
     def bottom_appbar_render(self):
+        brew_can_start = scales_model.cup_present and scales_model.tea_present and scales_model.water_present
         self.content = ft.Row(
             controls=[
                 ft.Row(
@@ -26,7 +29,8 @@ class BottomAppbar(ft.BottomAppBar):
                         AppBarButton(
                             icon=ft.Icon(ft.icons.PLAY_ARROW if not timer_model.is_ticking else ft.icons.PAUSE),
                             label=None,
-                            on_click=self.start_timer if not timer_model.is_ticking else self.stop_timer
+                            on_click=self.start_timer if not timer_model.is_ticking else self.stop_timer,
+                            disabled=not brew_can_start
                         ),
                         AppBarButton(
                             icon=ft.Image("icons/tea.svg", color=Color.LIGHT, color_blend_mode=ft.BlendMode.DST),
@@ -84,6 +88,7 @@ class BottomAppbar(ft.BottomAppBar):
 
     def stop_timer(self, evt: ft.ControlEvent):
         timer_model.is_ticking = False
+        stop_brew(page=self.page)
         self.page.update()
 
     async def update_current_time(self):
@@ -156,5 +161,7 @@ class BottomAppbar(ft.BottomAppBar):
         timer_model.is_ticking = False
         timer_model.current_time = 0
         timer_model.total_brew_time = 0
+        scales_model.reset()
         self.page.close(new_set_modal)
         self.page.update()
+        start_brew(page=self.page)

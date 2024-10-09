@@ -24,31 +24,6 @@ def format_seconds(seconds):
         return f"{sign}{minutes:02}:{secs:02}"
 
 
-def format_statistics(stats):
-    session_timer, state, weight = stats
-    weight = float(weight)
-    v = [f"{session_timer:02} sec", f"{weight:.1f} gr.", f"{state}"]
-    if 'water' in state:
-        v.append(f"Left: {session_timer:02} sec")
-    print(v)
-    return ",\n".join(v)
-    return str(stats)
-
-
-def state2filename(state):
-    str = 'empty' if state == {'empty'} else 'tea_cup'
-    str += '+water' if 'water' in state else ''
-    str += '+cap' if 'cap' in state else ''
-
-    return str + '.png'
-
-
-def create_countdown(countdown_timer, start_from=10):
-    return countdown_timer.pipe(
-        ops.scan(lambda acc, _: acc - 1, start_from),
-    )
-
-
 def emit_list(list, observer):
     def emit():
         observer.on_next(0.)
@@ -79,19 +54,6 @@ def to_none_stream(observer, scheduler):
     ], observer)
 
 
-# def numbers_stream(observer, scheduler):
-
-    # emit_list([
-    #     (empty, 2),
-    #     (empty_teapot, 1),
-    #     (full_teapot, 3),
-    #     (full_teapot_cap, 3),
-    #     (empty_teapot, 2),
-    #     (full_teapot, 18),
-    #     (empty, 4),
-    # ], observer)
-
-
 def update_objects(page: ft.Page, objects: set[str]):
     if scales_model.set_objects(objects):
         page.update()
@@ -102,8 +64,8 @@ def update_weight(page: ft.Page, grams: float):
         page.update()
 
 
-def simulate_scales(page: ft.Page):
-    weight = rx.create(none_to_full_stream).pipe(ops.publish())
+def play_stream(page: ft.Page, stream, on_completed):
+    weight = rx.create(stream).pipe(ops.publish())
 
     state = weight.pipe(
         ops.map(lambda v: identify_teapot_state(v)),
@@ -114,8 +76,16 @@ def simulate_scales(page: ft.Page):
         lambda objects: update_objects(page, objects)
     )
     weight.subscribe(
-        on_next = lambda grams: update_weight(page, grams),
-        on_completed = lambda: print('end')
+        on_next=lambda grams: update_weight(page, grams),
+        on_completed=on_completed
     )
 
     weight.connect()
+
+
+def start_brew(page: ft.Page):
+    play_stream(page, none_to_full_stream, None)
+
+
+def stop_brew(page: ft.Page):
+    play_stream(page, to_none_stream, lambda: start_brew(page))
